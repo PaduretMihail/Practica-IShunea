@@ -82,6 +82,53 @@ public class PlayerAnimationControler : MonoBehaviour
             else if(forwardPressed && velocityZ < currentMaxVelocity && velocityZ > (currentMaxVelocity - 0.05f)){
                 velocityZ = currentMaxVelocity;
             }
+            if(!forwardPressed && !leftPressed && !rightPressed && !backPressed){
+                if(velocityX < 0){
+                    velocityX += Time.deltaTime * deceleration * 4;
+                }
+                if(velocityX > 0){
+                    velocityX -= Time.deltaTime * deceleration * 4;
+                }
+                if(velocityZ > 0){
+                    velocityZ -= Time.deltaTime * deceleration * 4;
+                }
+                if(velocityZ < 0){
+                    velocityZ += Time.deltaTime * deceleration * 4;
+                }
+            }
+
+            if(velocityX < 0 && rightPressed && velocityX > -2){
+                velocityX += Time.deltaTime * deceleration * 8;
+            }
+            if(velocityX > 0 && leftPressed && velocityX < 2){
+                velocityX -= Time.deltaTime * deceleration * 8;
+            }
+            if(velocityZ < 0 && forwardPressed && velocityZ > -2){
+                velocityZ += Time.deltaTime * deceleration * 8;
+            }
+            if(velocityZ > 0 && backPressed && velocityZ < 2){
+                velocityZ -= Time.deltaTime * deceleration * 8;
+            }
+
+            if(velocityZ == 0 && forwardPressed && runPressed){
+                velocityZ = maximumWalkVelocity;
+                if(rightPressed){
+                    velocityX = maximumWalkVelocity;
+                }
+                if(leftPressed){
+                    velocityX = -maximumWalkVelocity;
+                }
+                
+            }
+            if(velocityZ == 0 && backPressed && runPressed){
+                velocityZ = -maximumWalkVelocity;
+                if(rightPressed){
+                    velocityX = maximumWalkVelocity;
+                }
+                if(leftPressed){
+                    velocityX = -maximumWalkVelocity;
+                }
+            }
             
             if(jumpPressed && !runPressed){
                 isJumping = true;

@@ -19,8 +19,7 @@ public class ImputManager : MonoBehaviour
 
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
-
-        //walk.Jump.performed += ctx => motor.Jump();
+        
     }
 
     // Update is called once per frame

@@ -21,25 +21,43 @@ public class PlayerMotor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = controller.isGrounded;
+
         if(Input.GetKeyDown(KeyCode.LeftShift)){
             sprinting = true;
         }
         if(Input.GetKeyUp(KeyCode.LeftShift)){
             sprinting = false;
         }
+
+        bool forwardPressed = Input.GetKey("w");
+        bool leftPressed = Input.GetKey("a");
+        bool rightPressed = Input.GetKey("d");
+        bool backPressed = Input.GetKey("s");
+
+        isGrounded = controller.isGrounded;
+
         if(sprinting && speed < 9f){
             speed += acceleration * Time.deltaTime;
         }
         if(sprinting && speed > 9f){
             speed = 9f;
         }
-        if(!sprinting && speed > 3){
+        if(!sprinting && speed > 3f){
             speed -= acceleration * Time.deltaTime;
         }
-        if(!sprinting && speed < 3){
+        if(!sprinting && speed < 3f){
             speed = 3f;
         }
+        if(!sprinting && !forwardPressed && !leftPressed && !rightPressed && !backPressed){
+            speed = 3f;
+        }
+
+        if(Input.GetKey(KeyCode.Space)){
+            if(isGrounded){
+                playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+            }
+        }
+
     }
     public void ProcessMove(Vector2 input){
         Vector3 moveDirection = Vector3.zero;
@@ -53,16 +71,4 @@ public class PlayerMotor : MonoBehaviour
         Debug.Log(playerVelocity.y);
     }
 
-    public void Jump(){
-        if(isGrounded){
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
-        }
-    }
-
-    public void Sprint(){
-        sprinting = !sprinting;
-        if(sprinting){
-            speed = 40f;
-        }else speed = 5f;
-    }
 }
