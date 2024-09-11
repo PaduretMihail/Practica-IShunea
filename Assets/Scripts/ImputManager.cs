@@ -20,10 +20,7 @@ public class ImputManager : MonoBehaviour
         motor = GetComponent<PlayerMotor>();
         look = GetComponent<PlayerLook>();
 
-        walk.Jump.performed += ctx => motor.Jump();
-
-        walk.Crouch.performed += ctx => motor.Crouch();
-        walk.Sprint.performed += ctx => motor.Sprint();
+        //walk.Jump.performed += ctx => motor.Jump();
     }
 
     // Update is called once per frame
@@ -40,4 +37,5 @@ public class ImputManager : MonoBehaviour
     private void OnDisable(){
         walk.Disable();
     }
+
 }

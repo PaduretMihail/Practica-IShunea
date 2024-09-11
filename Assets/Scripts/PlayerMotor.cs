@@ -7,13 +7,11 @@ public class PlayerMotor : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool isGrounded;
-    private bool sprinting = false;
-    private bool crouching = false;
-    private bool lerpCrouch;
-    private float crouchTime;
-    public float speed = 5f;
+    bool sprinting = false;
+    public float speed = 3f;
     public float gravity = -9.8f;
     public float jumpHeight = 3f;
+    private float acceleration = 3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,20 +22,23 @@ public class PlayerMotor : MonoBehaviour
     void Update()
     {
         isGrounded = controller.isGrounded;
-        if(lerpCrouch){
-            crouchTime += Time.deltaTime;
-            float p = crouchTime / 1;
-            p *= p;
-            if(crouching)
-                controller.height = Mathf.Lerp(controller.height, 1, p);
-            else
-                controller.height = Mathf.Lerp(controller.height, 2, p);
-            
-            if (p > 1)
-            {
-                lerpCrouch = false;
-                crouchTime = 0f;
-            }
+        if(Input.GetKeyDown(KeyCode.LeftShift)){
+            sprinting = true;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift)){
+            sprinting = false;
+        }
+        if(sprinting && speed < 9f){
+            speed += acceleration * Time.deltaTime;
+        }
+        if(sprinting && speed > 9f){
+            speed = 9f;
+        }
+        if(!sprinting && speed > 3){
+            speed -= acceleration * Time.deltaTime;
+        }
+        if(!sprinting && speed < 3){
+            speed = 3f;
         }
     }
     public void ProcessMove(Vector2 input){
@@ -58,23 +59,10 @@ public class PlayerMotor : MonoBehaviour
         }
     }
 
-    public void Crouch(){
-        crouching = !crouching;
-        if(crouching)
-            speed = 3;
-        else
-            speed = 5;
-        crouchTime = 0;
-        lerpCrouch = true;
-    }
-
     public void Sprint(){
-        if(!crouching){
-            sprinting = !sprinting;
-            if(sprinting)
-                speed = 10;
-            else
-                speed = 5;
-        }
+        sprinting = !sprinting;
+        if(sprinting){
+            speed = 40f;
+        }else speed = 5f;
     }
 }
