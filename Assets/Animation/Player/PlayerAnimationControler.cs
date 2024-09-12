@@ -8,7 +8,6 @@ public class PlayerAnimationControler : MonoBehaviour
 {
     Animator animator;
     private CharacterController controller;
-    private Vector3 playerVelocity;
     private bool isGrounded;
     private bool isFalling;
     public float gravity = -9.8f;
@@ -105,37 +104,40 @@ public class PlayerAnimationControler : MonoBehaviour
                 }
             }
 
-            if(velocityX < 0 && rightPressed && velocityX > -2){
-                velocityX += Time.deltaTime * deceleration * 8;
+            if(!runPressed){
+                if(velocityX < 0.5f && rightPressed && velocityX > -0.5f){
+                    velocityX += Time.deltaTime * acceleration * 8;
+                }
+                if(velocityX > -0.5f && leftPressed && velocityX < 0.5f){
+                    velocityX -= Time.deltaTime * acceleration * 8;
+                }
+                if(velocityZ < 0.5f && forwardPressed && velocityZ > -0.5f){
+                    velocityZ += Time.deltaTime * acceleration * 8;
+                }
+                if(velocityZ > -0.5f && backPressed && velocityZ < 0.5f){
+                    velocityZ -= Time.deltaTime * acceleration * 8;
+                }
             }
-            if(velocityX > 0 && leftPressed && velocityX < 2){
-                velocityX -= Time.deltaTime * deceleration * 8;
-            }
-            if(velocityZ < 0 && forwardPressed && velocityZ > -2){
-                velocityZ += Time.deltaTime * deceleration * 8;
-            }
-            if(velocityZ > 0 && backPressed && velocityZ < 2){
-                velocityZ -= Time.deltaTime * deceleration * 8;
+            if(runPressed){
+                if(velocityX < 2 && rightPressed && velocityX > -2){
+                    velocityX += Time.deltaTime * acceleration * 8;
+                }
+                if(velocityX > -2 && leftPressed && velocityX < 2){
+                    velocityX -= Time.deltaTime * acceleration * 8;
+                }
+                if(velocityZ < 2 && forwardPressed && velocityZ > -2){
+                    velocityZ += Time.deltaTime * acceleration * 8;
+                }
+                if(velocityZ > -2 && backPressed && velocityZ < 2){
+                    velocityZ -= Time.deltaTime * acceleration * 8;
+                }
             }
 
-            if(velocityZ == 0 && forwardPressed && runPressed){
-                velocityZ = maximumWalkVelocity;
-                if(rightPressed){
-                    velocityX = maximumWalkVelocity;
-                }
-                if(leftPressed){
-                    velocityX = -maximumWalkVelocity;
-                }
-                
+            if(velocityZ < 2 && forwardPressed && runPressed){
+                velocityZ += Time.deltaTime * acceleration * 8;   
             }
-            if(velocityZ == 0 && backPressed && runPressed){
-                velocityZ = -maximumWalkVelocity;
-                if(rightPressed){
-                    velocityX = maximumWalkVelocity;
-                }
-                if(leftPressed){
-                    velocityX = -maximumWalkVelocity;
-                }
+            if(velocityZ > -2 && backPressed && runPressed){
+                velocityZ -= Time.deltaTime * acceleration * 8;
             }
             
             if(jumpPressed && !runPressed){
@@ -149,6 +151,21 @@ public class PlayerAnimationControler : MonoBehaviour
             if(!jumpPressed){
                 isJumping = false;
                 isRunning = false;
+            }
+
+            if(!forwardPressed && !leftPressed && !rightPressed && !backPressed){
+                if(velocityZ > 0){
+                    velocityZ -= Time.deltaTime * deceleration * 10;
+                }
+                if(velocityZ < 0){
+                    velocityZ += Time.deltaTime * deceleration * 10;
+                }
+                if(velocityX > 0){
+                    velocityX -= Time.deltaTime * deceleration * 10;
+                }
+                if(velocityX < 0){
+                    velocityX += Time.deltaTime * deceleration * 10;
+                }
             }
             
         }
