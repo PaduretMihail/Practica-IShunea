@@ -89,20 +89,7 @@ public class PlayerAnimationControler : MonoBehaviour
             else if(forwardPressed && velocityZ < currentMaxVelocity && velocityZ > (currentMaxVelocity - 0.05f)){
                 velocityZ = currentMaxVelocity;
             }
-            if(!forwardPressed && !leftPressed && !rightPressed && !backPressed){
-                if(velocityX < 0){
-                    velocityX += Time.deltaTime * deceleration * 4;
-                }
-                if(velocityX > 0){
-                    velocityX -= Time.deltaTime * deceleration * 4;
-                }
-                if(velocityZ > 0){
-                    velocityZ -= Time.deltaTime * deceleration * 4;
-                }
-                if(velocityZ < 0){
-                    velocityZ += Time.deltaTime * deceleration * 4;
-                }
-            }
+            
 
             if(!runPressed){
                 if(velocityX < 0.5f && rightPressed && velocityX > -0.5f){
@@ -131,6 +118,19 @@ public class PlayerAnimationControler : MonoBehaviour
                 if(velocityZ > -2 && backPressed && velocityZ < 2){
                     velocityZ -= Time.deltaTime * acceleration * 8;
                 }
+            }
+
+            if(forwardPressed && velocityX < 0 && !leftPressed && !rightPressed){
+                velocityX += Time.deltaTime * deceleration * 8;
+            }
+            if(forwardPressed && velocityX > 0 && !leftPressed && !rightPressed){
+                velocityX -= Time.deltaTime * deceleration * 8;
+            }
+            if(backPressed && velocityX < 0 && !leftPressed && !rightPressed){
+                velocityX += Time.deltaTime * deceleration * 8;
+            }
+            if(backPressed && velocityX > 0 && !leftPressed && !rightPressed){
+                velocityX -= Time.deltaTime * deceleration * 8;
             }
 
             if(velocityZ < 2 && forwardPressed && runPressed){
