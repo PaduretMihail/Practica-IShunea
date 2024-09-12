@@ -347,13 +347,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.6830127, y: -0.18301266, z: 0.18301266, w: 0.6830127}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: -30, z: 0}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +464,7 @@ Transform:
   m_GameObject: {fileID: 1050982384}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -300, y: 0, z: -300}
+  m_LocalPosition: {x: -500, y: 0, z: -500}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -520,6 +520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d77ba1c636af81045aed92fc2d70a7bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gravity: -9.8
+  jumpHeight: 3
   acceleration: 2
   deceleration: 2
   maximumWalkVelocity: 0.5
@@ -912,7 +914,7 @@ PrefabInstance:
     - target: {fileID: 5201806143069208484, guid: deb044b3074948a4985287b321bd3a7d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 46.19
       objectReference: {fileID: 0}
     - target: {fileID: 5201806143069208484, guid: deb044b3074948a4985287b321bd3a7d,
         type: 3}

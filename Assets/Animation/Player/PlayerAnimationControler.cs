@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 
@@ -7,7 +8,11 @@ public class PlayerAnimationControler : MonoBehaviour
 {
     Animator animator;
     private CharacterController controller;
+    private Vector3 playerVelocity;
     private bool isGrounded;
+    private bool isFalling;
+    public float gravity = -9.8f;
+    public float jumpHeight = 3f;
     float velocityZ = 0.0f;
     float velocityX = 0.0f;
     public float acceleration = 2.0f;
@@ -29,6 +34,9 @@ public class PlayerAnimationControler : MonoBehaviour
     void Update()
     {
         isGrounded = controller.isGrounded;
+        if(!isGrounded){
+            isFalling = true;
+        }else isFalling = false;
         bool forwardPressed = Input.GetKey("w");
         bool leftPressed = Input.GetKey("a");
         bool rightPressed = Input.GetKey("d");
@@ -149,6 +157,7 @@ public class PlayerAnimationControler : MonoBehaviour
             animator.SetFloat("VelocityX", velocityX);
             animator.SetBool("isJumping", isJumping);
             animator.SetBool("isRunning", isRunning);
+            animator.SetBool("isFalling", isFalling);
 
     }
 
